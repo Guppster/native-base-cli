@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/GeekyAnts/native-base-cli#readme",
   "dependencies": {
-    "fs-extra": "^3.0.1"
+    "fs-extra": "^3.0.1",
+    "vorpal": "^1.12.0"
   }
 }

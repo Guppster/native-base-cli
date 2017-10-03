@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-"use_strict";
 
-var fs = require("fs-extra");
-var cmd = process.argv[2];
-var cmd2 = process.argv[3];
+const vorpal = require('vorpal')();
+var create = require("./modules/create");
+var createExpo = require("./modules/createExpo");
 var init = require("./modules/init");
 var initExpo = require("./modules/initExpo");
 
@@ -13,20 +12,30 @@ var renameProject = function() {
 	require("./modules/renameProject.js")(oldName, newName);
 };
 
-var displayHelp = function() {
-	console.log("This is a help message");
-};
+vorpal
+  .command('init <ProjectName>', 'Initializes a NativeBase project.')
+  .option('-e, --expos', 'Generate CRNA/Expo App.')
+  .action(function(args, callback) {
+    if (args.options.expos) {
+	createExpo();
+    } else {
+	create();
+    }
+    callback();
+  });
 
-switch (cmd) {
-	case "init":
-		switch (cmd2) {
-			case "--expo":
-				initExpo();
-				break;
-			default:
-				init();
-		}
-		break;
-	default:
-		displayHelp();
-}
+vorpal
+  .command('sample [ProjectName]', 'Loads a sample NativeBase project.')
+  .option('-e, --expos', 'Generate CRNA/Expo App.')
+  .action(function(args, callback) {
+    if (args.options.expos) {
+	initExpo();
+    } else {
+	init();
+    }
+    callback();
+  });
+
+vorpal
+  .delimiter('NativeBase->')
+  .show();
