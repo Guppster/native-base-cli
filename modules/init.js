@@ -1,7 +1,7 @@
 var spawnSync = require("child_process").spawnSync;
 var execSync = require("child_process").execSync;
 var path = require("path");
-var tools = require"./tools");
+var tools = require("./tool");
 
 module.exports = 
 	function initExpo() 

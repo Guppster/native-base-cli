@@ -2,9 +2,7 @@
 
 const vorpal = require('vorpal')();
 var create = require("./modules/create");
-var createExpo = require("./modules/createExpo");
 var init = require("./modules/init");
-var initExpo = require("./modules/initExpo");
 
 var renameProject = function() {
 	var oldName = process.argv[3];

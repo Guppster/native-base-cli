@@ -1,46 +1,23 @@
 var spawnSync = require("child_process").spawnSync;
 var execSync = require("child_process").execSync;
 var path = require("path");
+var tools = require("./tool");
 
-module.exports = function init() {
-	var initProcess = spawnSync("git", ["clone", "git@github.com:GeekyAnts/native-base-boilerplate.git"], {
+module.exports = 
+	function create(name) {
+	spawnSync("react-native", ["init", name], {
 		stdio: "inherit",
 	});
 
-	function getYarnVersionIfAvailable() {
-		var yarnVersion;
-		try {
-			// execSync returns a Buffer -> convert to string
-			if (process.platform.startsWith("win")) {
-				yarnVersion = (execSync("yarn --version").toString() || "").trim();
-			} else {
-				yarnVersion = (execSync("yarn --version 2>/dev/null").toString() || "").trim();
-			}
-		} catch (error) {
-			return null;
-		}
-		if (yarnVersion) yarnInstall();
-		else npmInstall();
-	}
+	process.chdir('/' + name);
 
-	var packageInstall = getYarnVersionIfAvailable();
+	spawnSync("npm", ["install", "--save"], {
+                        cwd: path.join(process.cwd(), name),
+                        stdio: "inherit",
+                });
 
-	function yarnInstall() {
-		spawnSync("yarn", ["install"], {
-			cwd: path.join(process.cwd(), "native-base-boilerplate"),
-			stdio: "inherit",
-		});
-	}
 
-	function npmInstall() {
-		spawnSync("npm", ["install"], {
-			cwd: path.join(process.cwd(), "native-base-boilerplate"),
-			stdio: "inherit",
-		});
-	}
-
-	var removeGit = spawnSync("rm", ["-rf", ".git"], {
-		cwd: path.join(process.cwd(), "native-base-boilerplate"),
+	spawnSync("react-native", ["link"], {
 		stdio: "inherit",
 	});
 };
