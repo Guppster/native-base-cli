@@ -13,8 +13,10 @@ var renameProject = function() {
 	require("./modules/renameProject.js")(oldName, newName);
 };
 
+var helpMsg = "Usage:\nnative-base init [--expo] <ProjectName> \nnative-base -h | --help \n\n--expo: Generate CRNA/Expo App"
+
 var displayHelp = function() {
-	console.log("This is a help message");
+	console.log(helpMsg);
 };
 
 switch (cmd) {
